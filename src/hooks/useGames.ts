@@ -24,19 +24,23 @@ interface FetchGamesResponse {
 const useGames = () => {
   const [games, setGames] = useState<Games[]>([]);
   const [errors, setErrors] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchGamesGird = async () => {
+      setLoading(true);
       try {
         const { data } = await apiClient.get<FetchGamesResponse>("/games");
         setGames([...data.results]);
+        setLoading(false);
       } catch (ex) {
         setErrors((ex as AxiosError).message);
+        setLoading(false);
       }
     };
     fetchGamesGird();
   }, []);
-  return { games, errors };
+  return { games, errors, isLoading };
 };
 
 export default useGames;
