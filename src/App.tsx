@@ -1,10 +1,25 @@
-import { Button, ButtonGroup, Show } from "@chakra-ui/react";
+import { Show } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenresList from "./components/GenresList";
+import useGames from "./hooks/useGames";
+import { useMemo, useState } from "react";
+import { Genres } from "./hooks/useGenres";
 
 function App() {
+  const { games, errors, isLoading } = useGames();
+  const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
+  const filteredGames = useMemo(
+    () =>
+      selectedGenre
+        ? games.filter((game) =>
+            game.genres.some((genre) => genre.id === selectedGenre.id)
+          )
+        : games,
+    [games, selectedGenre]
+  );
+
   return (
     <Grid
       templateAreas={{
@@ -21,11 +36,11 @@ function App() {
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
-          <GenresList />
+          <GenresList onFilter={(genre) => setSelectedGenre({ ...genre })} />
         </GridItem>
       </Show>
       <GridItem area="main">
-        <GameGrid />
+        <GameGrid games={filteredGames} errors={errors} isLoading={isLoading} />
       </GridItem>
     </Grid>
   );

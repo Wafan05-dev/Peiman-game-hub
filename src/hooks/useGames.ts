@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import apiClient from "../services/api-client";
 import { AxiosError } from "axios";
+import { Genres } from "./useGenres";
 
 export interface Platform {
   id: number;
@@ -14,6 +15,7 @@ export interface Games {
   background_image: string;
   parent_platforms: { platform: Platform }[];
   metacritic: number;
+  genres: Genres[];
 }
 
 interface FetchGamesResponse {
