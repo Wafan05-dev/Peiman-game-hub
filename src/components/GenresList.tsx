@@ -4,12 +4,15 @@ import getCroppedImageUrl from "../services/image-url";
 import GenreListSkeleton from "./GenreListSkeleton";
 
 interface Props {
+  selectedGenre: Genres | null;
   onFilter: (genre: Genres) => void;
 }
 
-const GenresList = ({ onFilter }: Props) => {
+const GenresList = ({ onFilter, selectedGenre }: Props) => {
   const { genres, errors, isLoading } = useGenres();
   const skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  console.log(selectedGenre);
 
   return (
     <>
@@ -36,6 +39,7 @@ const GenresList = ({ onFilter }: Props) => {
               variant="link"
               marginLeft={2}
               fontSize="lg"
+              fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
               whiteSpace="break-spaces"
               textAlign="left"
               onClick={() => onFilter(genre)}
