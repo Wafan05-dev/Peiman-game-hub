@@ -6,6 +6,7 @@ import GenresList from "./components/GenresList";
 import useGames from "./hooks/useGames";
 import { useMemo, useState } from "react";
 import { Genres } from "./hooks/useGenres";
+import PlatformSelector from "./components/PlatformSelector";
 
 function App() {
   const { games, errors, isLoading } = useGames();
@@ -43,6 +44,7 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main">
+        <PlatformSelector />
         <GameGrid games={filteredGames} errors={errors} isLoading={isLoading} />
       </GridItem>
     </Grid>

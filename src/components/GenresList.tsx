@@ -12,8 +12,6 @@ const GenresList = ({ onFilter, selectedGenre }: Props) => {
   const { genres, errors, isLoading } = useGenres();
   const skeleton = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  console.log(selectedGenre);
-
   return (
     <>
       {genres && <p>{errors}</p>}
