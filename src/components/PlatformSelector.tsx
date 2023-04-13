@@ -21,7 +21,12 @@ const PlatformSelector = ({ onPlatformSelect, selectedPlatform }: Props) => {
     <>
       {errors && <Text>{errors}</Text>}
       <Menu>
-        <MenuButton as={Button} rightIcon={<BsChevronDown />} marginLeft="10px">
+        <MenuButton
+          as={Button}
+          rightIcon={<BsChevronDown />}
+          marginLeft="10px"
+          marginRight={5}
+        >
           {selectedPlatform?.name || "Platforms"}
         </MenuButton>
         <MenuList>

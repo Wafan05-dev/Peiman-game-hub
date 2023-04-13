@@ -43,16 +43,15 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main">
-        <HStack spacing={5} marginBottom={3}>
-          <PlatformSelector
-            onPlatformSelect={(platform) => setSelectedPlatform(platform)}
-            selectedPlatform={selectedPlatform}
-          />
-          <SortSelector
-            onSelectSortOrder={(sortOrder) => setSortOrder(sortOrder)}
-            selectedSortOrder={sortOrder}
-          />
-        </HStack>
+        <PlatformSelector
+          onPlatformSelect={(platform) => setSelectedPlatform(platform)}
+          selectedPlatform={selectedPlatform}
+        />
+        <SortSelector
+          onSelectSortOrder={(sortOrder) => setSortOrder(sortOrder)}
+          selectedSortOrder={sortOrder}
+        />
+
         <GameGrid games={filteredGames} errors={errors} isLoading={isLoading} />
       </GridItem>
     </Grid>
