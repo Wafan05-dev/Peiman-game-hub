@@ -1,14 +1,15 @@
-import { Show } from "@chakra-ui/react";
+import { HStack, Show } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenresList from "./components/GenresList";
 import useGames from "./hooks/useGames";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Genres } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
 import { ParentPlatform } from "./hooks/usePlatforms";
 import renderGames from "./utils/renderingGames";
+import SortSelector from "./components/SortSelector";
 
 function App() {
   const { games, errors, isLoading } = useGames();
@@ -40,10 +41,13 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main">
-        <PlatformSelector
-          onPlatformSelect={(platform) => setSelectedPlatform(platform)}
-          selectedPlatform={selectedPlatform}
-        />
+        <HStack spacing={5} marginBottom={3}>
+          <PlatformSelector
+            onPlatformSelect={(platform) => setSelectedPlatform(platform)}
+            selectedPlatform={selectedPlatform}
+          />
+          <SortSelector />
+        </HStack>
         <GameGrid games={filteredGames} errors={errors} isLoading={isLoading} />
       </GridItem>
     </Grid>
