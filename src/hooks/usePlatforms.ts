@@ -3,7 +3,7 @@ import apiClient from "../services/api-client";
 import { AxiosError } from "axios";
 import { Platform } from "./useGames";
 
-interface ParentPlatform {
+export interface ParentPlatform {
   id: number;
   name: string;
   platforms: Platform[];

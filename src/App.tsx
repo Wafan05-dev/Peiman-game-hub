@@ -7,19 +7,15 @@ import useGames from "./hooks/useGames";
 import { useMemo, useState } from "react";
 import { Genres } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
+import { ParentPlatform } from "./hooks/usePlatforms";
+import renderGames from "./utils/renderingGames";
 
 function App() {
   const { games, errors, isLoading } = useGames();
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
-  const filteredGames = useMemo(
-    () =>
-      selectedGenre
-        ? games.filter((game) =>
-            game.genres.some((genre) => genre.id === selectedGenre.id)
-          )
-        : games,
-    [games, selectedGenre]
-  );
+  const [selectedPlatform, setSelectedPlatform] =
+    useState<ParentPlatform | null>(null);
+  const filteredGames = renderGames(games, selectedGenre, selectedPlatform);
 
   return (
     <Grid
@@ -44,7 +40,10 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main">
-        <PlatformSelector />
+        <PlatformSelector
+          onPlatformSelect={(platform) => setSelectedPlatform(platform)}
+          selectedPlatform={selectedPlatform}
+        />
         <GameGrid games={filteredGames} errors={errors} isLoading={isLoading} />
       </GridItem>
     </Grid>
