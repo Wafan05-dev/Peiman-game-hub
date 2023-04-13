@@ -23,7 +23,7 @@ interface FetchGamesResponse {
   results: Games[];
 }
 
-const useGames = () => {
+const useGames = (sortOrder: string) => {
   const [games, setGames] = useState<Games[]>([]);
   const [errors, setErrors] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -32,7 +32,11 @@ const useGames = () => {
     const fetchGamesGird = async () => {
       setLoading(true);
       try {
-        const { data } = await apiClient.get<FetchGamesResponse>("/games");
+        const { data } = await apiClient.get<FetchGamesResponse>("/games", {
+          params: {
+            ordering: sortOrder,
+          },
+        });
         setGames([...data.results]);
         setLoading(false);
       } catch (ex) {
@@ -41,7 +45,7 @@ const useGames = () => {
       }
     };
     fetchGamesGird();
-  }, []);
+  }, [sortOrder]);
   return { games, errors, isLoading };
 };
 

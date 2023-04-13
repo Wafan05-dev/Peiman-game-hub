@@ -12,10 +12,12 @@ import renderGames from "./utils/renderingGames";
 import SortSelector from "./components/SortSelector";
 
 function App() {
-  const { games, errors, isLoading } = useGames();
+  const [sortOrder, setSortOrder] = useState("");
+  const { games, errors, isLoading } = useGames(sortOrder);
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
   const [selectedPlatform, setSelectedPlatform] =
     useState<ParentPlatform | null>(null);
+
   const filteredGames = renderGames(games, selectedGenre, selectedPlatform);
 
   return (
@@ -46,7 +48,10 @@ function App() {
             onPlatformSelect={(platform) => setSelectedPlatform(platform)}
             selectedPlatform={selectedPlatform}
           />
-          <SortSelector />
+          <SortSelector
+            onSelectSortOrder={(sortOrder) => setSortOrder(sortOrder)}
+            selectedSortOrder={sortOrder}
+          />
         </HStack>
         <GameGrid games={filteredGames} errors={errors} isLoading={isLoading} />
       </GridItem>
