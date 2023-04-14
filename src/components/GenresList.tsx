@@ -15,7 +15,7 @@ const GenresList = ({ onFilter, selectedGenre }: Props) => {
   return (
     <>
       {genres && <p>{errors}</p>}
-      <Heading marginBottom={2}>Genres</Heading>
+      <Heading marginBottom={5}>Genres</Heading>
       <List spacing={3}>
         {isLoading &&
           skeleton.map((skeleton) => (
@@ -31,6 +31,7 @@ const GenresList = ({ onFilter, selectedGenre }: Props) => {
             <Image
               boxSize={10}
               borderRadius={11}
+              objectFit="cover"
               src={getCroppedImageUrl(genre.image_background)}
             ></Image>
             <Button

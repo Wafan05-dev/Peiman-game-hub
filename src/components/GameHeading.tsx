@@ -8,9 +8,6 @@ interface Props {
 }
 
 const GameHeading = ({ genre, platform }: Props) => {
-  console.log(genre);
-  console.log(platform);
-
   return (
     <Heading marginY={5} marginX={2}>
       <HStack>
