@@ -4,7 +4,7 @@ import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import GenresList from "./components/GenresList";
 import useGames from "./hooks/useGames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Genres } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
 import { ParentPlatform } from "./hooks/usePlatforms";
@@ -17,8 +17,22 @@ function App() {
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
   const [selectedPlatform, setSelectedPlatform] =
     useState<ParentPlatform | null>(null);
+  const [searchElement, setSearchElement] = useState<string>("");
 
-  const filteredGames = renderGames(games, selectedGenre, selectedPlatform);
+  useEffect(() => {
+    if (searchElement) {
+      setSelectedGenre(null);
+      setSelectedPlatform(null);
+    }
+    if (selectedGenre || selectedPlatform) setSearchElement("");
+  }, [searchElement, selectedGenre, selectedPlatform]);
+
+  const filteredGames = renderGames(
+    games,
+    selectedGenre,
+    selectedPlatform,
+    searchElement
+  );
 
   return (
     <Grid
@@ -32,7 +46,7 @@ function App() {
       }}
     >
       <GridItem area="nav">
-        <NavBar />
+        <NavBar onSearch={(search) => setSearchElement(search)} />
       </GridItem>
       <Show above="lg">
         <GridItem area="aside" paddingX={5}>
