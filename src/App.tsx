@@ -10,6 +10,7 @@ import PlatformSelector from "./components/PlatformSelector";
 import { ParentPlatform } from "./hooks/usePlatforms";
 import renderGames from "./utils/renderingGames";
 import SortSelector from "./components/SortSelector";
+import GameHeading from "./components/GameHeading";
 
 function App() {
   const [sortOrder, setSortOrder] = useState("");
@@ -57,6 +58,7 @@ function App() {
         </GridItem>
       </Show>
       <GridItem area="main">
+        <GameHeading genre={selectedGenre} platform={selectedPlatform} />
         <PlatformSelector
           onPlatformSelect={(platform) => setSelectedPlatform(platform)}
           selectedPlatform={selectedPlatform}
