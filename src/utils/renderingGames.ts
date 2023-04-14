@@ -23,8 +23,8 @@ const renderGames = (
   );
   const searchedGames = games.filter(
     (game) =>
-      game.slug.startsWith(searchedElement) ||
-      game.slug.includes(searchedElement)
+      game.slug.startsWith(searchedElement.toLocaleLowerCase()) ||
+      game.slug.includes(searchedElement.toLocaleLowerCase())
   );
 
   if (selectedGenre && selectedPlatform) return filteredByBoth;
