@@ -24,7 +24,10 @@ interface FetchGamesResponse {
   results: Games[];
 }
 
-const useGames = (sortOrder: string) => {
+const useGames = (
+  sortOrder: string,
+  selectedPlatformId: number | undefined
+) => {
   const [games, setGames] = useState<Games[]>([]);
   const [errors, setErrors] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -36,6 +39,7 @@ const useGames = (sortOrder: string) => {
         const { data } = await apiClient.get<FetchGamesResponse>("/games", {
           params: {
             ordering: sortOrder,
+            parent_platforms: selectedPlatformId,
           },
         });
         setGames([...data.results]);
@@ -46,7 +50,7 @@ const useGames = (sortOrder: string) => {
       }
     };
     fetchGamesGird();
-  }, [sortOrder]);
+  }, [sortOrder, selectedPlatformId]);
   return { games, errors, isLoading };
 };
 

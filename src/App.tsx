@@ -1,4 +1,4 @@
-import { Flex, HStack, Show } from "@chakra-ui/react";
+import { Flex, Show } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
@@ -8,16 +8,18 @@ import { useEffect, useState } from "react";
 import { Genres } from "./hooks/useGenres";
 import PlatformSelector from "./components/PlatformSelector";
 import { ParentPlatform } from "./hooks/usePlatforms";
-import renderGames from "./utils/renderingGames";
 import SortSelector from "./components/SortSelector";
 import GameHeading from "./components/GameHeading";
 
 function App() {
   const [sortOrder, setSortOrder] = useState("");
-  const { games, errors, isLoading } = useGames(sortOrder);
-  const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
   const [selectedPlatform, setSelectedPlatform] =
     useState<ParentPlatform | null>(null);
+  const { games, errors, isLoading } = useGames(
+    sortOrder,
+    selectedPlatform?.id
+  );
+  const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
   const [searchElement, setSearchElement] = useState<string>("");
 
   useEffect(() => {
@@ -27,13 +29,6 @@ function App() {
     }
     if (selectedGenre || selectedPlatform) setSearchElement("");
   }, [searchElement, selectedGenre, selectedPlatform]);
-
-  const filteredGames = renderGames(
-    games,
-    selectedGenre,
-    selectedPlatform,
-    searchElement
-  );
 
   return (
     <Grid
@@ -69,7 +64,7 @@ function App() {
             selectedSortOrder={sortOrder}
           />
         </Flex>
-        <GameGrid games={filteredGames} errors={errors} isLoading={isLoading} />
+        <GameGrid games={games} errors={errors} isLoading={isLoading} />
       </GridItem>
     </Grid>
   );
