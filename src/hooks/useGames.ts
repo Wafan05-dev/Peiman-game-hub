@@ -26,7 +26,9 @@ interface FetchGamesResponse {
 
 const useGames = (
   sortOrder: string,
-  selectedPlatformId: number | undefined
+  selectedPlatformId: number | undefined,
+  genres: Genres | null,
+  search: string | null
 ) => {
   const [games, setGames] = useState<Games[]>([]);
   const [errors, setErrors] = useState("");
@@ -40,6 +42,8 @@ const useGames = (
           params: {
             ordering: sortOrder,
             parent_platforms: selectedPlatformId,
+            genres: genres?.slug,
+            search: search,
           },
         });
         setGames([...data.results]);
@@ -50,7 +54,7 @@ const useGames = (
       }
     };
     fetchGamesGird();
-  }, [sortOrder, selectedPlatformId]);
+  }, [sortOrder, selectedPlatformId, genres, search]);
   return { games, errors, isLoading };
 };
 

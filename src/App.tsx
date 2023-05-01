@@ -13,14 +13,16 @@ import GameHeading from "./components/GameHeading";
 
 function App() {
   const [sortOrder, setSortOrder] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
+  const [searchElement, setSearchElement] = useState<string>("");
   const [selectedPlatform, setSelectedPlatform] =
     useState<ParentPlatform | null>(null);
   const { games, errors, isLoading } = useGames(
     sortOrder,
-    selectedPlatform?.id
+    selectedPlatform?.id,
+    selectedGenre,
+    searchElement
   );
-  const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
-  const [searchElement, setSearchElement] = useState<string>("");
 
   useEffect(() => {
     if (searchElement) {
